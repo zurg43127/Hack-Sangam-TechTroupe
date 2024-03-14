@@ -1,0 +1,97 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+    <style>
+      body {
+          background-image: url('/static/bg_3.jpg'); /* Update with your image file name */
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          color: #ffffff; /* Set text color to white for better visibility */
+      }
+
+
+      h2 {
+            color: #ffd700; /* Set a gold/yellow color for headings */
+            text-shadow: 2px 2px 4px #000000; /* Add a subtle text shadow for emphasis */
+        }
+
+        h3 {
+            color: #ffd700; /* Set a gold/yellow color for subheadings */
+        }
+
+        p {
+            font-size: 16px; /* Adjust the font size for paragraph text */
+            margin-bottom: 10px; /* Add some spacing between paragraphs */
+        }
+
+        i {
+            font-size: 24px; /* Adjust the font size for Weather Icons */
+            margin-right: 10px; /* Add some spacing to the right of the icons */
+        }
+
+        .alert {
+            background-color: #d9534f; /* Set a red background color for error messages */
+            border-color: #d43f3a; /* Set a darker red border color */
+            color: #ffffff; /* Set text color to white for better visibility */
+        }
+
+
+      /* Add more styles as needed */
+  </style>
+    
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Weather App</h2>
+        <form method="POST" action="/">
+            <div class="form-group">
+                <label for="city">Enter City:</label>
+                <input type="text" class="form-control" id="city" name="city" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Get Weather</button>
+        </form>
+
+        {% if error_message %}
+            <div class="mt-4 alert alert-danger">
+                {{ error_message }}
+            </div>
+        {% endif %}
+
+        {% if current_weather %}
+            <div class="mt-4">
+                <h3>{{ current_weather['city'] }} - Current Weather</h3>
+                <p>Temperature: {{ current_weather['temperature'] }} °C</p>
+                <p>Description: {{ current_weather['description'] }}</p>
+                <img src="http://openweathermap.org/img/w/{{ current_weather['icon'] }}.png" alt="Weather Icon">
+            </div>
+        {% endif %}
+
+        {% if forecast_weather %}
+            <div class="mt-4">
+                <h3>{{ current_weather['city'] }} - 5-Day Forecast</h3>
+                <div class="row">
+                    {% for forecast in forecast_weather %}
+                        <div class="col-md-2">
+                            <p>{{ forecast['datetime'] }}</p>
+                            <p>Temperature: {{ forecast['temperature'] }} °C</p>
+                            <p>Description: {{ forecast['description'] }}</p>
+                            <img src="http://openweathermap.org/img/w/{{ forecast['icon'] }}.png" alt="Weather Icon">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html> -->
