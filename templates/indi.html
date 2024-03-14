@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App for Farmers</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
+
+    <style>
+        body {
+            min-height: 100vh;
+            background-image: url('/static/bg_4.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .weather-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        h2 {
+            color: #ffd700;
+            text-shadow: 2px 2px 4px #000000;
+        }
+
+        .weather-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s; /* Smooth transition effect */
+        }
+
+        /* Change color on hover */
+        .weather-box:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        h3 {
+            color: #ffd700;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        i {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .btn-get-weather {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .alert {
+            background-color: #d9534f;
+            border-color: #d43f3a;
+            color: #ffffff;
+        }
+
+        .crop-info {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="mt-4">
+        <form method="GET" action="{{ url_for('set_language') }}">
+            <select name="language" onchange="this.form.submit()">
+                <option value="en" {% if current_language == 'en' %}selected{% endif %}>English</option>
+                <option value="fr" {% if current_language == 'fr' %}selected{% endif %}>French</option>
+            </select>
+        </form>
+    </div>
+
+    <div class="container mt-5 weather-container">
+        <h2>{{ _('Weather Information for Farmers') }}</h2>
+        <form method="POST" action="/" class="d-flex flex-column align-items-center">
+            <div class="form-group">
+                <label for="city">{{ _('Enter City:') }}</label>
+                <input type="text" class="form-control" id="city" name="city" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-get-weather">{{ _('Get Weather') }}</button>
+        </form>
+
+        {% if error_message %}
+        <div class="mt-4 alert alert-danger">
+            {{ error_message }}
+        </div>
+        {% endif %}
+
+        {% if current_weather %}
+        <div class="mt-4 weather-box">
+            <h3>{{ current_weather['city'] }} - Current Weather</h3>
+            <p>{{ _('Temperature:') }} {{ current_weather['temperature'] }} °C</p>
+            <p>{{ _('Description:') }} {{ current_weather['description'] }}</p>
+            <img src="http://openweathermap.org/img/w/{{ current_weather['icon'] }}.png" alt="Weather Icon">
+        </div>
+
+        <!-- Provide crop-specific information -->
+        <div class="mt-4 crop-info">
+            <h3>{{ _('Crop Information') }}</h3>
+            <p>{{ _('Recommended crop for this weather: Wheat') }}</p>
+            <p>{{ _('Suggested planting time: Spring') }}</p>
+            <p>{{ _('Watering advice: Moderate water requirements') }}</p>
+        </div>
+        {% endif %}
+
+        {% if forecast_weather %}
+        <div class="mt-4 weather-box">
+            <h3>{{ current_weather['city'] }} - 5-Day Forecast</h3>
+            <div class="row">
+                {% for forecast in forecast_weather %}
+                <div class="col-md-2">
+                    <div class="weather-box">
+                        <p>{{ forecast['datetime'] }}</p>
+                        <p>{{ _('Temperature:') }} {{ forecast['temperature'] }} °C</p>
+                        <p>{{ _('Description:') }} {{ forecast['description'] }}</p>
+                        <img src="http://openweathermap.org/img/w/{{ forecast['icon'] }}.png" alt="Weather Icon">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
